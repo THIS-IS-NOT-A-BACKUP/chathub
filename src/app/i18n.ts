@@ -26,7 +26,7 @@ const resources = {
       Model: '模型',
       'Presale discount': '预售折扣',
       'Cloud syncing data': '数据云同步',
-      'More bots in All-In-One mode': '在All-In-One模式下使用更多chatbot',
+      'More bots in All-In-One mode': '在All-In-One模式下使用更多chatbot（三合一、四合一）',
       'Chat history full-text search': '全文搜索聊天记录',
       'Customize theme': '自定义主题',
       'More in the future': '享受未来所有功能更新',
@@ -53,8 +53,8 @@ const resources = {
       'Lifetime license': '终身授权',
       'Join the waitlist': '加入waitlist',
       'GPT-4 models require ChatGPT Plus': 'ChatGPT Plus账号可使用',
-      'Available to Poe subscribers only': 'Poe订阅会员可使用',
       'Model used by ChatGPT iOS app, potentially faster': 'ChatGPT iOS app使用的模型，可能更快',
+      'Poe subscribers only': 'Poe订阅会员可用',
     },
   },
   de: {
