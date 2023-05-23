@@ -25,11 +25,11 @@ const resources = {
       Search: '搜索',
       Model: '模型',
       'Presale discount': '预售折扣',
-      'Cloud syncing data': '数据云同步',
       'More bots in All-In-One mode': '在All-In-One模式下使用更多chatbot（三合一、四合一）',
       'Chat history full-text search': '全文搜索聊天记录',
       'Customize theme': '自定义主题',
-      'More in the future': '享受未来所有功能更新',
+      'More features in the future': '享受未来所有功能更新',
+      'Support the development of ChatHub': '支持ChatHub的开发',
       'Enjoy ChatHub? Give us a 5-star rating!': '喜欢ChatHub吗？给我们个5星好评吧！',
       'Write review': '去评价',
       'Activate license': '激活License',
@@ -55,6 +55,9 @@ const resources = {
       'GPT-4 models require ChatGPT Plus': 'ChatGPT Plus账号可使用',
       'Model used by ChatGPT iOS app, potentially faster': 'ChatGPT iOS app使用的模型，可能更快',
       'Poe subscribers only': 'Poe订阅会员可用',
+      'Quick access in Chrome side bar': '在Chrome侧边栏快速访问',
+      'You have opened ChatHub {{openTimes}} times, consider unlock all features?':
+        '哇！你已经打开ChatHub {{openTimes}}次了，是否要解锁全部功能呢？🥺',
     },
   },
   de: {
