@@ -1,6 +1,7 @@
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
-import { ALL_IN_ONE_PAGE_ID, CHATGPT_API_MODELS } from '~app/consts'
+import { BotId } from '~app/bots'
+import { ALL_IN_ONE_PAGE_ID, CHATBOTS, CHATGPT_API_MODELS } from '~app/consts'
 
 export enum BingConversationStyle {
   Creative = 'creative',
@@ -51,10 +52,11 @@ const userConfigWithDefaultValue = {
   startupPage: ALL_IN_ONE_PAGE_ID,
   bingConversationStyle: BingConversationStyle.Balanced,
   multiPanelLayout: MultiPanelLayout.Two,
-  poeModel: PoeClaudeModel.ClaudePlus,
+  poeModel: PoeClaudeModel.ClaudeInstant,
   azureOpenAIApiKey: '',
   azureOpenAIApiInstanceName: '',
   azureOpenAIApiDeploymentName: '',
+  enabledBots: Object.keys(CHATBOTS).slice(0, 8) as BotId[],
 }
 
 export type UserConfig = typeof userConfigWithDefaultValue
