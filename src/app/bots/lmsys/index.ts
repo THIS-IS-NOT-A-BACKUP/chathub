@@ -1,5 +1,4 @@
 import WebSocketAsPromised from 'websocket-as-promised'
-import { html2md } from '~app/utils/markdown'
 import { ChatError, ErrorCode } from '~utils/errors'
 import { AbstractBot, SendMessageParams } from '../abstract-bot'
 import { generateSessionHash } from './utils'
@@ -24,7 +23,8 @@ export class LMSYSBot extends AbstractBot {
 
   async doSendMessage(params: SendMessageParams) {
     if (!this.conversationContext) {
-      this.conversationContext = { sessionHash: generateSessionHash() }
+      const sessionHash = await this.createSession(params.signal)
+      this.conversationContext = { sessionHash }
     }
 
     const sendWsp = await this.connectWebsocket(
@@ -69,8 +69,7 @@ export class LMSYSBot extends AbstractBot {
           if (fnIndex === FnIndex.Receive) {
             const outputData = event.output.data
             if (outputData[1].length > 0) {
-              const html = outputData[1][outputData[1].length - 1][1]
-              const text = html2md(html)
+              const text = outputData[1][outputData[1].length - 1][1]
               onEvent({ type: 'UPDATE_ANSWER', data: { text } })
             }
           }
@@ -106,5 +105,34 @@ export class LMSYSBot extends AbstractBot {
 
   resetConversation() {
     this.conversationContext = undefined
+  }
+
+  async initializeSession(fnIndex: number, sessionHash: string, data: unknown[], signal?: AbortSignal): Promise<void> {
+    const wsp = new WebSocketAsPromised('wss://chat.lmsys.org/queue/join', {
+      packMessage: (data) => JSON.stringify(data),
+      unpackMessage: (data) => JSON.parse(data as string),
+    })
+    signal?.addEventListener('abort', () => wsp.close())
+    return new Promise((resolve, reject) => {
+      wsp.onUnpackedMessage.addListener((event) => {
+        if (event.msg === 'send_hash') {
+          wsp.sendPacked({ fn_index: fnIndex, session_hash: sessionHash })
+        } else if (event.msg === 'send_data') {
+          wsp.sendPacked({ fn_index: fnIndex, data, event_data: null, session_hash: sessionHash })
+        } else if (event.msg === 'process_completed') {
+          resolve()
+        }
+      })
+      wsp.open().catch((err) => reject(err))
+    })
+  }
+
+  async createSession(signal?: AbortSignal) {
+    const sessionHash = generateSessionHash()
+    await Promise.all([
+      this.initializeSession(36, sessionHash, [], signal),
+      this.initializeSession(43, sessionHash, [{}], signal),
+    ])
+    return sessionHash
   }
 }
