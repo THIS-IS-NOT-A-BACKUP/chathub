@@ -8,7 +8,7 @@ import Button, { Props as ButtonProps } from '../Button'
 import MessageBubble from './MessageBubble'
 
 const ActionButton: FC<ButtonProps> = (props) => {
-  return <Button {...props} size="small" className="drop-shadow-lg" color="primary" />
+  return <Button {...props} size="small" className="font-medium underline" color="primary" />
 }
 
 const ChatGPTAuthErrorAction = () => {
@@ -106,6 +106,13 @@ const ErrorAction: FC<{ error: ChatError }> = ({ error }) => {
     return (
       <a href="https://claude.ai" target="_blank" rel="noreferrer">
         <ActionButton text={t('Login to Claude.ai')} />
+      </a>
+    )
+  }
+  if (error.code === ErrorCode.BARD_UNAUTHORIZED) {
+    return (
+      <a href="https://bard.google.com" target="_blank" rel="noreferrer">
+        <ActionButton text={t('Login to bard.google.com')} />
       </a>
     )
   }
